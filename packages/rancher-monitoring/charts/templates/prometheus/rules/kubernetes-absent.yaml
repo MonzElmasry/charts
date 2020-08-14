@@ -58,7 +58,7 @@ spec:
       labels:
         severity: critical
 {{- end }}
-{{- if or .Values.kubeControllerManager.enabled .Values.rkeControllerManager.enabled .Values.k3sControllerManager.enabled .Values.kubeAdmControllerManager.enabled }}
+{{- if or .Values.kubeControllerManager.enabled .Values.rkeControllerManager.enabled .Values.k3sControllerManager.enabled .Values.kubeAdmControllerManager.enabled .Values.rke2ControllerManager.enabled }}
     - alert: KubeControllerManagerDown
       annotations:
         message: KubeControllerManager has disappeared from Prometheus target discovery.
@@ -68,7 +68,7 @@ spec:
       labels:
         severity: critical
 {{- end }}
-{{- if or .Values.kubeScheduler.enabled .Values.rkeScheduler.enabled .Values.k3sScheduler.enabled .Values.kubeAdmScheduler.enabled }}
+{{- if or .Values.kubeScheduler.enabled .Values.rkeScheduler.enabled .Values.k3sScheduler.enabled .Values.kubeAdmScheduler.enabled .Values.rke2Scheduler.enabled }}
     - alert: KubeSchedulerDown
       annotations:
         message: KubeScheduler has disappeared from Prometheus target discovery.

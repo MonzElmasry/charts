@@ -85,3 +85,27 @@ dependencies:
     version: 0.1.0
     repository: file://../../rancher-pushprox/charts
     condition: kubeAdmEtcd.enabled
+
+  - name: rancher-pushprox
+    alias: rke2ControllerManager
+    version: 0.1.0
+    repository: file://../../rancher-pushprox/charts
+    condition: rke2ControllerManager.enabled
+
+  - name: rancher-pushprox
+    alias: rke2Scheduler
+    version: 0.1.0
+    repository: file://../../rancher-pushprox/charts
+    condition: rke2Scheduler.enabled
+
+  - name: rancher-pushprox
+    alias: rke2Proxy
+    version: 0.1.0
+    repository: file://../../rancher-pushprox/charts
+    condition: rke2Proxy.enabled
+
+  - name: rancher-pushprox
+    alias: rke2Etcd
+    version: 0.1.0
+    repository: file://../../rancher-pushprox/charts
+    condition: rke2Etcd.enabled

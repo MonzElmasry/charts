@@ -5,7 +5,7 @@ https://github.com/helm/charts/tree/master/stable/prometheus-operator/hack
 */ -}}
 {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
 {{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.defaultRules.create }}
-{{- if or .Values.kubeControllerManager.enabled .Values.rkeControllerManager.enabled .Values.k3sControllerManager.enabled .Values.kubeAdmControllerManager.enabled }}
+{{- if or .Values.kubeControllerManager.enabled .Values.rkeControllerManager.enabled .Values.k3sControllerManager.enabled .Values.kubeAdmControllerManager.enabled .Values.rke2ControllerManager.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -25,7 +25,7 @@ spec:
   groups:
   - name: kubernetes-system-controller-manager
     rules:
-{{- if or .Values.kubeControllerManager.enabled .Values.rkeControllerManager.enabled .Values.k3sControllerManager.enabled .Values.kubeAdmControllerManager.enabled }}
+{{- if or .Values.kubeControllerManager.enabled .Values.rkeControllerManager.enabled .Values.k3sControllerManager.enabled .Values.kubeAdmControllerManager.enabled .Values.rke2ControllerManager.enabled }}
     - alert: KubeControllerManagerDown
       annotations:
         message: KubeControllerManager has disappeared from Prometheus target discovery.
