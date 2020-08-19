@@ -1,7 +1,7 @@
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/Chart.yaml packages/rancher-monitoring/charts/Chart.yaml
 --- packages/rancher-monitoring/charts-original/Chart.yaml
 +++ packages/rancher-monitoring/charts/Chart.yaml
-@@ -1,22 +1,26 @@
+@@ -1,7 +1,14 @@
  apiVersion: v1
  appVersion: 0.38.1
 -description: Provides easy monitoring definitions for Kubernetes services, and deployment
@@ -11,35 +11,88 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/Cha
 +  catalog.cattle.io/namespace: cattle-monitoring-system
 +  catalog.cattle.io/release-name: rancher-monitoring
 +  catalog.cattle.io/ui-component: monitoring
-+description: A Rancher chart that modifies the upstream Prometheus Operator chart, which provides easy monitoring definitions for Kubernetes services and the deployment and management of Prometheus instances, and enables Prometheus Adapter on a default Prometheus instance.
++description: A Rancher chart that modifies the upstream Prometheus Operator chart,
++  which provides easy monitoring definitions for Kubernetes services and the deployment
++  and management of Prometheus instances, and enables Prometheus Adapter on a default
++  Prometheus instance.
  engine: gotpl
  home: https://github.com/coreos/prometheus-operator
  icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
- keywords:
--- operator
--- prometheus
-+  - operator
-+  - prometheus
- maintainers:
--- name: vsliouniaev
--- name: bismarck
--- email: gianrubio@gmail.com
--  name: gianrubio
+@@ -13,7 +20,7 @@
+ - name: bismarck
+ - email: gianrubio@gmail.com
+   name: gianrubio
 -name: prometheus-operator
-+  - name: vsliouniaev
-+  - name: bismarck
-+  - email: gianrubio@gmail.com
-+    name: gianrubio
 +name: rancher-monitoring
  sources:
--- https://github.com/coreos/kube-prometheus
--- https://github.com/coreos/prometheus-operator
--- https://coreos.com/operators/prometheus
-+  - https://github.com/coreos/kube-prometheus
-+  - https://github.com/coreos/prometheus-operator
-+  - https://coreos.com/operators/prometheus
- tillerVersion: '>=2.12.0'
- version: 8.16.1
+ - https://github.com/coreos/kube-prometheus
+ - https://github.com/coreos/prometheus-operator
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-alertmanager.yaml packages/rancher-monitoring/charts/crds/crd-alertmanager.yaml
+--- packages/rancher-monitoring/charts-original/crds/crd-alertmanager.yaml
++++ packages/rancher-monitoring/charts/crds/crd-alertmanager.yaml
+@@ -4,7 +4,6 @@
+ metadata:
+   annotations:
+     controller-gen.kubebuilder.io/version: v0.2.4
+-    helm.sh/hook: crd-install
+   creationTimestamp: null
+   name: alertmanagers.monitoring.coreos.com
+ spec:
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-podmonitor.yaml packages/rancher-monitoring/charts/crds/crd-podmonitor.yaml
+--- packages/rancher-monitoring/charts-original/crds/crd-podmonitor.yaml
++++ packages/rancher-monitoring/charts/crds/crd-podmonitor.yaml
+@@ -4,7 +4,6 @@
+ metadata:
+   annotations:
+     controller-gen.kubebuilder.io/version: v0.2.4
+-    helm.sh/hook: crd-install
+   creationTimestamp: null
+   name: podmonitors.monitoring.coreos.com
+ spec:
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-prometheusrules.yaml packages/rancher-monitoring/charts/crds/crd-prometheusrules.yaml
+--- packages/rancher-monitoring/charts-original/crds/crd-prometheusrules.yaml
++++ packages/rancher-monitoring/charts/crds/crd-prometheusrules.yaml
+@@ -4,7 +4,6 @@
+ metadata:
+   annotations:
+     controller-gen.kubebuilder.io/version: v0.2.4
+-    helm.sh/hook: crd-install
+   creationTimestamp: null
+   name: prometheusrules.monitoring.coreos.com
+ spec:
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-prometheus.yaml packages/rancher-monitoring/charts/crds/crd-prometheus.yaml
+--- packages/rancher-monitoring/charts-original/crds/crd-prometheus.yaml
++++ packages/rancher-monitoring/charts/crds/crd-prometheus.yaml
+@@ -4,7 +4,6 @@
+ metadata:
+   annotations:
+     controller-gen.kubebuilder.io/version: v0.2.4
+-    helm.sh/hook: crd-install
+   creationTimestamp: null
+   name: prometheuses.monitoring.coreos.com
+ spec:
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-servicemonitor.yaml packages/rancher-monitoring/charts/crds/crd-servicemonitor.yaml
+--- packages/rancher-monitoring/charts-original/crds/crd-servicemonitor.yaml
++++ packages/rancher-monitoring/charts/crds/crd-servicemonitor.yaml
+@@ -4,7 +4,6 @@
+ metadata:
+   annotations:
+     controller-gen.kubebuilder.io/version: v0.2.4
+-    helm.sh/hook: crd-install
+   creationTimestamp: null
+   name: servicemonitors.monitoring.coreos.com
+ spec:
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-thanosrulers.yaml packages/rancher-monitoring/charts/crds/crd-thanosrulers.yaml
+--- packages/rancher-monitoring/charts-original/crds/crd-thanosrulers.yaml
++++ packages/rancher-monitoring/charts/crds/crd-thanosrulers.yaml
+@@ -4,7 +4,6 @@
+ metadata:
+   annotations:
+     controller-gen.kubebuilder.io/version: v0.2.4
+-    helm.sh/hook: crd-install
+   creationTimestamp: null
+   name: thanosrulers.monitoring.coreos.com
+ spec:
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/README.md packages/rancher-monitoring/charts/README.md
 --- packages/rancher-monitoring/charts-original/README.md
 +++ packages/rancher-monitoring/charts/README.md
@@ -166,72 +219,6 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/REA
  
  ### Kubelet Service
  Because the kubelet service has a new name in the chart, make sure to clean up the old kubelet service in the `kube-system` namespace to prevent counting container metrics twice.
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-alertmanager.yaml packages/rancher-monitoring/charts/crds/crd-alertmanager.yaml
---- packages/rancher-monitoring/charts-original/crds/crd-alertmanager.yaml
-+++ packages/rancher-monitoring/charts/crds/crd-alertmanager.yaml
-@@ -4,7 +4,6 @@
- metadata:
-   annotations:
-     controller-gen.kubebuilder.io/version: v0.2.4
--    helm.sh/hook: crd-install
-   creationTimestamp: null
-   name: alertmanagers.monitoring.coreos.com
- spec:
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-podmonitor.yaml packages/rancher-monitoring/charts/crds/crd-podmonitor.yaml
---- packages/rancher-monitoring/charts-original/crds/crd-podmonitor.yaml
-+++ packages/rancher-monitoring/charts/crds/crd-podmonitor.yaml
-@@ -4,7 +4,6 @@
- metadata:
-   annotations:
-     controller-gen.kubebuilder.io/version: v0.2.4
--    helm.sh/hook: crd-install
-   creationTimestamp: null
-   name: podmonitors.monitoring.coreos.com
- spec:
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-prometheus.yaml packages/rancher-monitoring/charts/crds/crd-prometheus.yaml
---- packages/rancher-monitoring/charts-original/crds/crd-prometheus.yaml
-+++ packages/rancher-monitoring/charts/crds/crd-prometheus.yaml
-@@ -4,7 +4,6 @@
- metadata:
-   annotations:
-     controller-gen.kubebuilder.io/version: v0.2.4
--    helm.sh/hook: crd-install
-   creationTimestamp: null
-   name: prometheuses.monitoring.coreos.com
- spec:
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-prometheusrules.yaml packages/rancher-monitoring/charts/crds/crd-prometheusrules.yaml
---- packages/rancher-monitoring/charts-original/crds/crd-prometheusrules.yaml
-+++ packages/rancher-monitoring/charts/crds/crd-prometheusrules.yaml
-@@ -4,7 +4,6 @@
- metadata:
-   annotations:
-     controller-gen.kubebuilder.io/version: v0.2.4
--    helm.sh/hook: crd-install
-   creationTimestamp: null
-   name: prometheusrules.monitoring.coreos.com
- spec:
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-servicemonitor.yaml packages/rancher-monitoring/charts/crds/crd-servicemonitor.yaml
---- packages/rancher-monitoring/charts-original/crds/crd-servicemonitor.yaml
-+++ packages/rancher-monitoring/charts/crds/crd-servicemonitor.yaml
-@@ -4,7 +4,6 @@
- metadata:
-   annotations:
-     controller-gen.kubebuilder.io/version: v0.2.4
--    helm.sh/hook: crd-install
-   creationTimestamp: null
-   name: servicemonitors.monitoring.coreos.com
- spec:
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/crds/crd-thanosrulers.yaml packages/rancher-monitoring/charts/crds/crd-thanosrulers.yaml
---- packages/rancher-monitoring/charts-original/crds/crd-thanosrulers.yaml
-+++ packages/rancher-monitoring/charts/crds/crd-thanosrulers.yaml
-@@ -4,7 +4,6 @@
- metadata:
-   annotations:
-     controller-gen.kubebuilder.io/version: v0.2.4
--    helm.sh/hook: crd-install
-   creationTimestamp: null
-   name: thanosrulers.monitoring.coreos.com
- spec:
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/requirements.yaml packages/rancher-monitoring/charts/requirements.yaml
 --- packages/rancher-monitoring/charts-original/requirements.yaml
 +++ packages/rancher-monitoring/charts/requirements.yaml
@@ -468,18 +455,6 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
    name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-pod" | trunc 63 | trimSuffix "-" }}
    annotations:
  {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards/k8s-resources-workload.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards/k8s-resources-workload.yaml
---- packages/rancher-monitoring/charts-original/templates/grafana/dashboards/k8s-resources-workload.yaml
-+++ packages/rancher-monitoring/charts/templates/grafana/dashboards/k8s-resources-workload.yaml
-@@ -8,7 +8,7 @@
- apiVersion: v1
- kind: ConfigMap
- metadata:
--  namespace: {{ template "prometheus-operator.namespace" . }}
-+  namespace: {{ .Values.grafana.sidecar.dashboards.searchNamespace }}
-   name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-workload" | trunc 63 | trimSuffix "-" }}
-   annotations:
- {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards/k8s-resources-workloads-namespace.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards/k8s-resources-workloads-namespace.yaml
 --- packages/rancher-monitoring/charts-original/templates/grafana/dashboards/k8s-resources-workloads-namespace.yaml
 +++ packages/rancher-monitoring/charts/templates/grafana/dashboards/k8s-resources-workloads-namespace.yaml
@@ -490,6 +465,18 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
 -  namespace: {{ template "prometheus-operator.namespace" . }}
 +  namespace: {{ .Values.grafana.sidecar.dashboards.searchNamespace }}
    name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-workloads-namespace" | trunc 63 | trimSuffix "-" }}
+   annotations:
+ {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards/k8s-resources-workload.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards/k8s-resources-workload.yaml
+--- packages/rancher-monitoring/charts-original/templates/grafana/dashboards/k8s-resources-workload.yaml
++++ packages/rancher-monitoring/charts/templates/grafana/dashboards/k8s-resources-workload.yaml
+@@ -8,7 +8,7 @@
+ apiVersion: v1
+ kind: ConfigMap
+ metadata:
+-  namespace: {{ template "prometheus-operator.namespace" . }}
++  namespace: {{ .Values.grafana.sidecar.dashboards.searchNamespace }}
+   name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-workload" | trunc 63 | trimSuffix "-" }}
    annotations:
  {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards/nodes.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards/nodes.yaml
@@ -674,18 +661,6 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
    name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-pod" | trunc 63 | trimSuffix "-" }}
    annotations:
  {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml
---- packages/rancher-monitoring/charts-original/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml
-+++ packages/rancher-monitoring/charts/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml
-@@ -8,7 +8,7 @@
- apiVersion: v1
- kind: ConfigMap
- metadata:
--  namespace: {{ template "prometheus-operator.namespace" . }}
-+  namespace: {{ .Values.grafana.sidecar.dashboards.searchNamespace }}
-   name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-workload" | trunc 63 | trimSuffix "-" }}
-   annotations:
- {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards-1.14/k8s-resources-workloads-namespace.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards-1.14/k8s-resources-workloads-namespace.yaml
 --- packages/rancher-monitoring/charts-original/templates/grafana/dashboards-1.14/k8s-resources-workloads-namespace.yaml
 +++ packages/rancher-monitoring/charts/templates/grafana/dashboards-1.14/k8s-resources-workloads-namespace.yaml
@@ -696,6 +671,18 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
 -  namespace: {{ template "prometheus-operator.namespace" . }}
 +  namespace: {{ .Values.grafana.sidecar.dashboards.searchNamespace }}
    name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-workloads-namespace" | trunc 63 | trimSuffix "-" }}
+   annotations:
+ {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml
+--- packages/rancher-monitoring/charts-original/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml
++++ packages/rancher-monitoring/charts/templates/grafana/dashboards-1.14/k8s-resources-workload.yaml
+@@ -8,7 +8,7 @@
+ apiVersion: v1
+ kind: ConfigMap
+ metadata:
+-  namespace: {{ template "prometheus-operator.namespace" . }}
++  namespace: {{ .Values.grafana.sidecar.dashboards.searchNamespace }}
+   name: {{ printf "%s-%s" (include "prometheus-operator.fullname" $) "k8s-resources-workload" | trunc 63 | trimSuffix "-" }}
    annotations:
  {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/grafana/dashboards-1.14/kubelet.yaml packages/rancher-monitoring/charts/templates/grafana/dashboards-1.14/kubelet.yaml
@@ -950,26 +937,6 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
 +{{- end }}
  {{- end }}
 \ No newline at end of file
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/prometheus/rules/kube-scheduler.rules.yaml packages/rancher-monitoring/charts/templates/prometheus/rules/kube-scheduler.rules.yaml
---- packages/rancher-monitoring/charts-original/templates/prometheus/rules/kube-scheduler.rules.yaml
-+++ packages/rancher-monitoring/charts/templates/prometheus/rules/kube-scheduler.rules.yaml
-@@ -4,7 +4,8 @@
- https://github.com/helm/charts/tree/master/stable/prometheus-operator/hack
- */ -}}
- {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
--{{- if and (semverCompare ">=1.10.0-0" $kubeTargetVersion) (semverCompare "<1.14.0-0" $kubeTargetVersion) .Values.defaultRules.create .Values.kubeScheduler.enabled .Values.defaultRules.rules.kubeScheduler }}
-+{{- if and (semverCompare ">=1.10.0-0" $kubeTargetVersion) (semverCompare "<1.14.0-0" $kubeTargetVersion) .Values.defaultRules.create .Values.defaultRules.rules.kubeScheduler }}
-+{{- if or .Values.kubeScheduler.enabled .Values.rkeScheduler.enabled .Values.k3sScheduler.enabled .Values.kubeAdmScheduler.enabled }}
- apiVersion: monitoring.coreos.com/v1
- kind: PrometheusRule
- metadata:
-@@ -60,4 +61,5 @@
-       labels:
-         quantile: '0.5'
-       record: cluster_quantile:scheduler_binding_latency:histogram_quantile
-+{{- end }}
- {{- end }}
-\ No newline at end of file
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/prometheus/rules/kubernetes-absent.yaml packages/rancher-monitoring/charts/templates/prometheus/rules/kubernetes-absent.yaml
 --- packages/rancher-monitoring/charts-original/templates/prometheus/rules/kubernetes-absent.yaml
 +++ packages/rancher-monitoring/charts/templates/prometheus/rules/kubernetes-absent.yaml
@@ -991,6 +958,26 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
      - alert: KubeSchedulerDown
        annotations:
          message: KubeScheduler has disappeared from Prometheus target discovery.
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/prometheus/rules/kube-scheduler.rules.yaml packages/rancher-monitoring/charts/templates/prometheus/rules/kube-scheduler.rules.yaml
+--- packages/rancher-monitoring/charts-original/templates/prometheus/rules/kube-scheduler.rules.yaml
++++ packages/rancher-monitoring/charts/templates/prometheus/rules/kube-scheduler.rules.yaml
+@@ -4,7 +4,8 @@
+ https://github.com/helm/charts/tree/master/stable/prometheus-operator/hack
+ */ -}}
+ {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
+-{{- if and (semverCompare ">=1.10.0-0" $kubeTargetVersion) (semverCompare "<1.14.0-0" $kubeTargetVersion) .Values.defaultRules.create .Values.kubeScheduler.enabled .Values.defaultRules.rules.kubeScheduler }}
++{{- if and (semverCompare ">=1.10.0-0" $kubeTargetVersion) (semverCompare "<1.14.0-0" $kubeTargetVersion) .Values.defaultRules.create .Values.defaultRules.rules.kubeScheduler }}
++{{- if or .Values.kubeScheduler.enabled .Values.rkeScheduler.enabled .Values.k3sScheduler.enabled .Values.kubeAdmScheduler.enabled }}
+ apiVersion: monitoring.coreos.com/v1
+ kind: PrometheusRule
+ metadata:
+@@ -60,4 +61,5 @@
+       labels:
+         quantile: '0.5'
+       record: cluster_quantile:scheduler_binding_latency:histogram_quantile
++{{- end }}
+ {{- end }}
+\ No newline at end of file
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/etcd.yaml packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/etcd.yaml
 --- packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/etcd.yaml
 +++ packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/etcd.yaml
@@ -1012,26 +999,6 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
 \ No newline at end of file
 +{{- end }}
 +{{- end }}
-diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml
---- packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml
-+++ packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml
-@@ -4,7 +4,8 @@
- https://github.com/helm/charts/tree/master/stable/prometheus-operator/hack
- */ -}}
- {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
--{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.defaultRules.create .Values.kubeScheduler.enabled .Values.defaultRules.rules.kubeScheduler }}
-+{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.defaultRules.create .Values.defaultRules.rules.kubeScheduler }}
-+{{- if or .Values.kubeScheduler.enabled .Values.rkeScheduler.enabled .Values.k3sScheduler.enabled .Values.kubeAdmScheduler.enabled }}
- apiVersion: monitoring.coreos.com/v1
- kind: PrometheusRule
- metadata:
-@@ -60,4 +61,5 @@
-       labels:
-         quantile: '0.5'
-       record: cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile
-+{{- end }}
- {{- end }}
-\ No newline at end of file
 diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/kubernetes-system-controller-manager.yaml packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/kubernetes-system-controller-manager.yaml
 --- packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/kubernetes-system-controller-manager.yaml
 +++ packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/kubernetes-system-controller-manager.yaml
@@ -1087,6 +1054,26 @@ diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/tem
        labels:
          severity: critical
  {{- end }}
++{{- end }}
+ {{- end }}
+\ No newline at end of file
+diff -x '*.tgz' -x '*.lock' -uNr packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml
+--- packages/rancher-monitoring/charts-original/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml
++++ packages/rancher-monitoring/charts/templates/prometheus/rules-1.14/kube-scheduler.rules.yaml
+@@ -4,7 +4,8 @@
+ https://github.com/helm/charts/tree/master/stable/prometheus-operator/hack
+ */ -}}
+ {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
+-{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.defaultRules.create .Values.kubeScheduler.enabled .Values.defaultRules.rules.kubeScheduler }}
++{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.defaultRules.create .Values.defaultRules.rules.kubeScheduler }}
++{{- if or .Values.kubeScheduler.enabled .Values.rkeScheduler.enabled .Values.k3sScheduler.enabled .Values.kubeAdmScheduler.enabled }}
+ apiVersion: monitoring.coreos.com/v1
+ kind: PrometheusRule
+ metadata:
+@@ -60,4 +61,5 @@
+       labels:
+         quantile: '0.5'
+       record: cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile
 +{{- end }}
  {{- end }}
 \ No newline at end of file
